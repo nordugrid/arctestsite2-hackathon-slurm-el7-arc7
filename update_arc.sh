@@ -1,5 +1,4 @@
 #!/bin/sh
-set -e
 os_v=el7
 
 echo "================== START PREPARATIONS ================================================================"
@@ -7,8 +6,8 @@ echo "================== START PREPARATIONS ====================================
 yum clean metadata
 
 cd /
-echo  "wget 'https://source.coderefinery.org/nordugrid/arc/-/jobs/artifacts/hackathon2022/download?job=packages_${os_v}' -O artifacts.zip"; 
-wget https://source.coderefinery.org/nordugrid/arc/-/jobs/artifacts/hackathon2022/download?job=build_${os_v} -O /artifacts.zip; 
+echo  "wget 'https://source.coderefinery.org/nordugrid/arc/-/jobs/artifacts/$1/download?job=packages_${os_v}' -O artifacts.zip"; 
+wget https://source.coderefinery.org/nordugrid/arc/-/jobs/artifacts/$1/download?job=build_${os_v} -O /artifacts.zip; 
 echo "unzip /artifacts.zip"; 
 unzip artifacts.zip; 
 
@@ -32,7 +31,6 @@ createrepo .
 
 
 cat > /etc/yum.repos.d/nordugrid-hackathon.repo <<EOF
-EOF
 [nordugrid-hackathon]
 name=NorduGrid - $basearch - CI
 baseurl=file:///rpmbuild/RPMS/x86_64
